@@ -1,0 +1,93 @@
+Before submitting this file, make sure that there are no more TODO
+placeholders remaining in the file (and remove this comment too).
+
+Perfect Numbers
+---------------
+
+Before submitting this file, make sure that there are no more TODO
+placeholders remaining in the file (and remove this comment too).
+
+Q1. Roughly how long did it take your computer to do the search? How many perfect numbers were found and what were they?
+A1.
+A1.1  2.62s;
+A1.2  4个, 分别是 6, 28, 496, 8128;
+
+Q2. Record the timing results for `findPerfects` that you observed into a table.
+A2.
+--------------------
+stop    |  time    |
+--------------------
+25000   |  1.046   |
+--------------------
+50000   |  3.727   |
+--------------------
+100000  |  13.419  |
+--------------------
+200000  |  50.798  |
+--------------------
+
+Q3. Does it take the same amount of work to compute `isPerfect` on the number 10 as it does on the number 1000? Why or why not? Does it take the same amount of work for `findPerfects` to search the range of numbers from 1-1000 as it does to search the numbers from 1000-2000? Why or why not?
+A3.
+A3.1  不一样, 一个是循环10次, 一个是循环1000次;
+A3.2  不一样, 虽然搜索1-1000和1000-2000, `find_perfects`中循环次数一样, 但是其调用的`isPerfect`, 在这两个范围的数中循环次数完全不同, 后者循环次数远远大于前者;
+
+Q4. Extrapolate from the data you gathered and make a prediction: how long will it take `findPerfects` to reach the fifth perfect number?
+A4.
+15天左右;
+
+Q5. Do any of the tests still pass even with this broken function? Why or why not?
+A5.
+A5.1  有的能, 有的不能;
+A5.2  所有完全数测试不能通过了, 因为加和多了1; `isPerfect`负数测试还是能通过, 它判断的是某数真因子之和与某数是否相等, 返回1永远不可能等于负数;
+
+Q6. Describe the testing strategy you used for your test cases to confirm `smarterSum` is working correctly.
+A6.
+相比于原函数, 本函数在for循环多了加上"大于平方根的除数配对"一步, 拿28来测试, 发现多加了28本身;
+还要考虑新的边界条件sqrt(n)是整数的时候, 1和25两者平方根都是整数,
+但是1返回值是0, 返回值不应该加上sqrt(1), 也多加了1本身, 并入上面情况; 25返回值需要加上sqrt(25);
+负数不应该开平方, 同时也规避了判断sqrt(n)是整数以及最终返回值减n带来的问题;
+
+Q7. Record your timing results for `findPerfectsSmarter` into a table.
+A7.
+----------------------
+stop      |  time    |
+----------------------
+562500    |  3.371   |
+----------------------
+1125000   |  8.773   |
+----------------------
+2250000   |  23.196  |
+----------------------
+4500000   |  62.892  |
+----------------------
+
+Q8. Make a prediction: how long will `findPerfectsSmarter` take to reach the fifth perfect number?
+A8.
+23分钟左右;
+
+Q9. Explain how you chose your specific test cases and why they lead you to be confident `findNthPerfectEuclid` is working correctly.
+A9.
+并不确定, 但是找第六个完全数时, 已经超过了long范围;
+
+Soundex
+-------
+
+Q10. What is the Soundex code for "Angelou"? What is the code for your own surname?
+A10.
+A524;
+
+Q11. Before writing any code, brainstorm your plan of attack and sketch how you might decompose the work into smaller tasks. Briefly describe your decomposition strategy.
+A11.
+1. 去除所有非字母字符：横线、空格、标点等
+2. 编码姓氏为数字串
+3. 合并数字串相邻的重复数字并且使用姓氏名的第一个字母替换第一个数字, 并转换为大写形式
+4. 删除编码中所有的数字0
+5. 通过填充0或截掉多余部分, 使得编码长度恰好为 4
+
+Q12. Think about one or more examples of a class of names that the Soundex system might not work well for. Explain what this class of names is and why the system might incorrectly group them or mis-categorize one of the names.
+A12. TODO
+
+Q13. Suppose you are a software engineer working for the U.S. government. You have been tasked with implementing a system that collects names as part of the Census survey and analyzes these names using a phonetic algorithm. Your boss suggests using Soundex and notes that the algorithm is only expected to work for ASCII-encoded strings, since supporting Unicode would require extra work and time. What would your response be and why? What representational harms might result from building a system that exclusively uses Soundex and/or ASCII?
+A13. TODO
+
+
