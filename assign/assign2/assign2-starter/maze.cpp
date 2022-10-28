@@ -18,14 +18,15 @@ using namespace std;
 
 /*
  * 本函数用来判断一个给定位置是否超出了迷宫边界;
+ * Grid本身有inBounds函数, 所以不必重复写此函数;
  */
-bool isInMazeBound(const Grid<bool>& maze,const GridLocation& location) {
-    if(location.row < 0 || location.col < 0)
-        return false;
-    if(location.row > maze.numRows() - 1 || location.col > maze.numCols() - 1)
-        return false;  // maze.numRows()需要减1, 这里是坐标比较
-    return true;
-}
+//bool isInMazeBound(const Grid<bool>& maze,const GridLocation& location) {
+//    if(location.row < 0 || location.col < 0)
+//        return false;
+//    if(location.row > maze.numRows() - 1 || location.col > maze.numCols() - 1)
+//        return false;  // maze.numRows()需要减1, 这里是坐标比较
+//    return true;
+//}
 
 /*
  * 本函数用来找到给定迷宫位置的所有有效相邻位置,
@@ -44,7 +45,8 @@ Set<GridLocation> generateValidMoves(Grid<bool>& maze, GridLocation cur) {
     moves.add({0, 1});  // 右
     for(int i=0; i < moves.size(); i++) {
         GridLocation moveCur = {cur.row + moves[i].row, cur.col + moves[i].col};
-        if(isInMazeBound(maze, moveCur) && maze[moveCur])
+//        if(isInMazeBound(maze, moveCur) && maze[moveCur])
+        if(maze.inBounds(moveCur) && maze[moveCur])
             neighbors.add(moveCur);
     }
     return neighbors;

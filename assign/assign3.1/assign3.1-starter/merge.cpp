@@ -205,15 +205,22 @@ STUDENT_TEST("STUDENT_TEST Time naiveMultiMerge operation of n") {
 Queue<int> recMultiMergeHelper(Vector<Queue<int>>& all, int start, int end) {
     Queue<int> result;
     // edge case
+    /* 这个是用来判断all最一开始是个空的Vector时的, 不然会无限递归
+     * 但没必要因为这个就每次递归都判断一次,
+     * 因为end - start == 1使得后面的递归都不会执行end - start == 0逻辑
+     * 所以可能在外面判断, 不在这个recMultiMergeHelper里判断会好点
+     */
     if(end - start == 0)
         return result;
-    if(end - start == 1)
+    if(end - start == 1) {
         return all[start];
-    // rest
-    int mid = (start + end) / 2;
-    Queue<int> left = recMultiMergeHelper(all, start, mid);
-    Queue<int> right = recMultiMergeHelper(all, mid, end);
-    result = binaryMerge(left, right);
+    } else {
+        // rest
+        int mid = (start + end) / 2;
+        Queue<int> left = recMultiMergeHelper(all, start, mid);
+        Queue<int> right = recMultiMergeHelper(all, mid, end);
+        result = binaryMerge(left, right);
+    }
     return result;
 }
 
@@ -222,6 +229,11 @@ Queue<int> recMultiMerge(Vector<Queue<int>>& all) {
 }
 
 /* * * * * * STUDENT Test Cases * * * * * */
+STUDENT_TEST("STUDENT_TEST recMultiMerge with empty input, compare to naiveMultiMerge") {
+    Vector<Queue<int>> allEmpty;
+    EXPECT_EQUAL(recMultiMerge(allEmpty), naiveMultiMerge(allEmpty));
+}
+
 STUDENT_TEST("STUDENT_TEST recMultiMerge, compare to naiveMultiMerge") {
     for (int i=0; i<4; ++i) {
         int n = 20 + i;
@@ -254,6 +266,11 @@ Queue<int> recMultiMergeNavie(Vector<Queue<int>>& all) {
 }
 
 /* * * * * * STUDENT Test Cases * * * * * */
+STUDENT_TEST("STUDENT_TEST recMultiMerge with empty input, compare to naiveMultiMerge") {
+    Vector<Queue<int>> allEmpty;
+    EXPECT_EQUAL(recMultiMergeNavie(allEmpty), naiveMultiMerge(allEmpty));
+}
+
 STUDENT_TEST("STUDENT_TEST recMultiMerge, compare to naiveMultiMerge") {
     for (int i=0; i<4; ++i) {
         int n = 20 + i;
