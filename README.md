@@ -2,7 +2,27 @@
 
 [TOC]
 
-# Assign-3
+# Assign-3.2
+
+### HW1
+
+##### Test-result
+
+![assign-3.2-hw1-test](assign/assign3.2/assign-3.2-hw1-test.jpg)
+
+### HW2
+
+##### Test-result
+
+![assign-3.2-hw2-test](assign/assign3.2/assign-3.2-hw2-test.jpg)
+
+### HW3
+
+##### Test-result
+
+![assign-3.2-hw3-test](assign/assign3.2/assign-3.2-hw3-test.jpg)
+
+# Assign-3.1
 
 ### HW1
 
