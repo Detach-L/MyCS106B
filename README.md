@@ -2,6 +2,36 @@
 
 [TOC]
 
+# Assign-4
+
+### HW1
+
+##### Test-result
+
+![assign-4-hw1-test](assign/assign4/assign-4-hw1-test.png)
+
+##### Final-result
+
+![assign-4-hw1-result](assign/assign4/assign-4-hw1-result.png)
+
+### HW2
+
+##### Test-result
+
+![assign-4-hw2-test](assign/assign4/assign-4-hw2-test.png)
+
+### HW3
+
+##### Test-result
+
+![assign-4-hw4-test](assign/assign4/assign-4-hw3-test.png)
+
+### HW4
+
+##### Test-result
+
+![assign-4-hw4-test](assign/assign4/assign-4-hw4-test.png)
+
 # Assign-3.2
 
 ### HW1

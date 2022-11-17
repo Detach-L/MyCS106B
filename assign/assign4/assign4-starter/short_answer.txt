@@ -1,0 +1,121 @@
+Before submitting this file, make sure that there are no more TODO
+placeholders remaining in the file (and remove this comment too).
+
+Warmup
+-------
+Q1. How do the values of the member variables of `allBalls[0]` change from iteration to iteration? Specifically, what happens to the values of `_id`, `_x`, and `_y`?
+A1.
+_id一直为0; 每轮迭代_x和_y的值会分别加上_vx和_vy的值;
+
+Q2. How do the values of the member variables of the stuck ball change from iteration to iteration? Contrast this to your answer to the previous question.
+A2.
+每轮迭代_x和_y的值会分别加上_vx和_vy的值, 但是由于_vx或者_vy在+4和-4间循环变化, 所以_x或_y的值也在某个范围循环变化;
+
+Q3. After forcing the stuck ball to position (0, 0), does the ball move normally from there or does it stay stuck?
+A3.
+恢复正常了;
+
+Q4. On your system, what is the observed consequence of these memory errors:
+- access an index outside the allocated array bounds?
+- delete same memory twice?
+- access memory after it has been deleted?
+A4.
+数组越界, 运行时会报"Test case that access indexes beyond array bounds"错误; 调试时会报段错误, 并停留在越界代码处;
+两次删除相同的内存, 运行时会直接终止程序; 调试时会报段错误, 并停留在第二次删除内存代码处;
+删除后访问内存, 能成功运行; 调试时会报"Test case that accesses memory after it was deleted"错误;
+PQArray
+-------
+Q5. There are extensive comments in both the interface (`pqarray.h`) and implementation (`pqarray.cpp`). Explain how and why the comments in the interface differ from those in the implementation. Consider both the content and audience for the documentation.
+A5.
+接口中的注释是给用户看的, 用户不需要知道如何实现, 只需要知道如何使用以及操作的时间复杂度;
+实现中的注释是给开发人员和自己看的, 需要解释清楚实现功能的具体方法以及为何这么实现;
+综上, 两种注释不同;
+
+Q6. The class declares member variables `_numAllocated` and `_numFilled`. What is the difference between these two counts and why are both needed?
+A6.
+_numAllocated是分配给优先队列存储数据的内存大小;
+_numFilled是优先队列中实际存储元素个数;
+
+Q7. Although code within the body of a member function can directly access the object's member variables, the implementer may instead choose to call public member functions to get information about the object. For example, note how the operations `isEmpty()` and `peek()` intentionally call `size()` instead of using `_numFilled` or how `dequeue()` calls `peek()` to retrieve the frontmost element. Why might be this be considered a better design?
+A7.
+使用已经实现的功能, 一方面能让程序更有含义, 清晰明了; 另一方面, 可能后面有其他处理需要在isEmpty()或者size()实现, 直接重新实现后续不好修改;
+
+Q8. Give the results from your time trials and explain how they support your prediction for the Big-O runtimes of  `enqueue` and `dequeue`.
+A8.
+2*O(n)+log(n), 扩展需要O(n), 找到相应插入位置O(logn), 插入元素O(n);
+当n=40000时, t=3.343s, n=80000时, t=12.797s, n=160000时, t=50.125s, 差不多是2*O(n);
+
+PQ Client
+---------
+Q9. Based on the Big O of `enqueue`/`dequeue`, what do you expect for the Big O of `pqSort` if using a `PQArray`? Run some timing trials to confirm your prediction, and include that data in your answer.
+A9.
+O(n^2)和O(n);
+
+Q10. Based on the Big O of `enqueue`/`dequeue`, what do you expect for the Big O of `topK` in terms of `k` and `n` if using a `PQArray`? Run some timing trials to confirm your prediction, and include that data in your answer.
+A10.
+O(n)*O(k);
+
+PQHeap
+------
+Q11. Start with an empty binary heap and enqueue the nine `DataPoint`s in the order shown below and show the result. You only need to show the final heap, not intermediate steps. Draw the heap as tree-like diagram with root element on top, its two children below, and so on. Yes, we know that we're asking you to draw pictures in a text file (we love the [AsciiFlow](http://asciiflow.com/) tool for "drawing" in text).
+A11.
+                1
+        3               2
+    6       5       9       4
+8       7
+
+Q12. Make two calls to `dequeue` on the above binary heap and draw the updated result.
+A12.
+第一次出队：
+                2
+        3               4
+    6       5       9       7
+8
+第二次出队：
+            3
+    5               4
+6       8       9       7
+
+Q13. Draw the array representation of the binary heap above. Label each element with its array index.
+A13.
+heap： 3  5  4  6  8  9  7
+index：0  1  2  3  4  5  6
+
+Q14. Re-run the timing trials on `pqclient.cpp` and provide your results that confirm that `pqSort` runs in time O(NlogN) and `topK` in O(NlogK).
+A14.
+若时间复杂度为NlogN,
+t2 / t1 = N1logN1 / N2logN2
+当k不变时,
+n=2000000     t=8.478s
+n=4000000     t=16.954s
+n=8000000     t=39.464s
+n=16000000    t=67.033s
+log16000000 ≈ 7.2, log8000000 ≈ 6.9, 两者比值接近1, 所以N翻倍, NlogN耗时多两倍
+
+若时间复杂度为NlogK,
+t2 / t1 = NlogK1 / NlogK2
+当n不变时,
+k=100000     t=1.846s
+k=200000     t=1.979s
+k=400000     t=2.079s
+k=800000     t=2.080s
+log800000 ≈ 5.9, log400000 ≈ 5.6, 两者比值接近1, 所以K翻倍, NlogK耗时变化不大
+
+Embedded Ethics
+---------------
+Q15. Consider the differences between this three-bin priority queue and the priority queue you implemented on your assignment. Which would be more efficient to insert elements into and why? More generally, what are the benefits and disadvantages of using the three-bin priority queue vs. a regular priority queue?
+A15. TODO
+
+Q16. Describe a real-world system where a three-bin priority queue could be used. What factors would you use to distinguish between a low vs. medium vs. high priority element? What limitations might you need to consider when using a three-bin priority queue to represent this system?
+A16. TODO
+
+Q17. Different admissions departments consider different factors and convert admissions criteria to numbers in different ways. Regardless of what specific factors are considered, should an admissions department use a purely numerical ranking system for applicants? Why or why not?
+
+If yes, discuss what factors you think would be best to include when calculating numerical rankings and why those factors are well-represented as numbers. If not, discuss what factors you think should be considered in college admissions that would be difficult to represent as a numerical score. There are no right or wrong answers here – we're genuinely interested in your thoughts!
+A17. TODO
+
+Q18. Describe a real-world system that requires ranking but in which classification with a single number misses important context (i.e. a priority queue might not be the best way to store the objects being ranked). Make sure to use an example that hasn't already been discussed in lecture or in this assignment.
+A18. TODO
+
+Q19. Consider the PQueue class you just implemented. What would you change about the public interface to allow the hospital to dynamically update priorities in order to determine which patient is the best match for an organ? For any methods that you add, briefly describe when they would be used by the client and how they might be implemented privately. Note: Your design does not have to be the fastest or most efficient.
+A19. TODO
